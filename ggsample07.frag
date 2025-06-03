@@ -29,10 +29,10 @@ void main(void)
   vec3 b = vec3(-n.z, 0.0, n.x);                    // 従接線ベクトル (n × (0, 1, 0))
   vec3 t = normalize(cross(n, b));                  // 接線ベクトル（円柱軸）
 
-  vec3 h = normalize(nl + nv);                      // ハーフベクトル
-  float rd = dot(nn, nl);                           // 拡散反射（オプション）
-  float rs = dot(h, t);                             // 鏡面反射（Kajiya-Kay）
-  rs = clamp(rs, 0.0, 1.0);                         // 負になるのを防ぐ
+  vec3 h = normalize(nl + nv);                      
+  float rd = dot(nn, nl);                           
+  float rs = dot(h, t);                             
+  rs = clamp(rs, 0.0, 1.0);                         
 
   vec4 iamb = kamb * lamb;
   vec4 idiff = max(rd, 0.0) * kdiff * ldiff;
