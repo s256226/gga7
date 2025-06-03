@@ -25,7 +25,6 @@ void main(void)
   vec3 nl = normalize(l);                           // 光線ベクトル
   vec3 nv = normalize(v);                           // 視線ベクトル
 
-  // Kajiya-Kay モデルにおける円柱軸の定義（接線ベクトル）
   vec3 b = vec3(-n.z, 0.0, n.x);                    // 従接線ベクトル (n × (0, 1, 0))
   vec3 t = normalize(cross(n, b));                  // 接線ベクトル（円柱軸）
 
