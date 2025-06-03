@@ -24,17 +24,19 @@ void main(void)
   vec3 nn = normalize(n);                           // 法線ベクトル
   vec3 nl = normalize(l);                           // 光線ベクトル
   vec3 nv = normalize(v);                           // 視線ベクトル
-  vec3 nr = reflect(nl, nn);                        // 反射ベクトル
 
+  // Kajiya-Kay モデルにおける円柱軸の定義（接線ベクトル）
   vec3 b = vec3(-n.z, 0.0, n.x);                    // 従接線ベクトル (n × (0, 1, 0))
-  vec3 t = normalize(cross(n, b));                  // 接線ベクトル (n × b)
+  vec3 t = normalize(cross(n, b));                  // 接線ベクトル（円柱軸）
 
-  float rd = max(dot(nn, nl), 0.0);
-  float rs = max(dot(t, h), 0.0);
+  vec3 h = normalize(nl + nv);                      // ハーフベクトル
+  float rd = dot(nn, nl);                           // 拡散反射（オプション）
+  float rs = dot(h, t);                             // 鏡面反射（Kajiya-Kay）
+  rs = clamp(rs, 0.0, 1.0);                         // 負になるのを防ぐ
 
   vec4 iamb = kamb * lamb;
   vec4 idiff = max(rd, 0.0) * kdiff * ldiff;
-  vec4 ispec = pow(max(rs, 0.0), kshi) * kspec * lspec;
+  vec4 ispec = pow(rs, kshi) * kspec * lspec;
 
   fc = iamb + idiff + ispec;
 }
