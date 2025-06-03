@@ -33,8 +33,8 @@ void main(void)
   float rs = max(dot(t, h), 0.0);
 
   vec4 iamb = kamb * lamb;
-  vec4 idiff = rd * kdiff * ldiff;
-  vec4 ispec = pow(rs, kshi) * kspec * lspec;
+  vec4 idiff = max(rd, 0.0) * kdiff * ldiff;
+  vec4 ispec = pow(max(rs, 0.0), kshi) * kspec * lspec;
 
   fc = iamb + idiff + ispec;
 }
